@@ -5,7 +5,10 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     InputAction moveAction;
+    InputAction inventoryAction;
+
     Vector2 moveRead;
+
 
     public float speed = 5f;
     public float rotationSpeed = 10f;
@@ -16,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         moveAction = InputSystem.actions.FindAction("Move");
+        inventoryAction = InputSystem.actions.FindAction("Inventory");
+
 
         if (moveAction == null)
         {
@@ -25,6 +30,12 @@ public class PlayerController : MonoBehaviour
         {
             moveAction.Enable();
         }
+
+        if (inventoryAction == null)
+            Debug.LogError("The Input Action 'Inventory' could not be found. Check your Input Action Asset setup!");
+        else
+            inventoryAction.Enable();
+
 
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -37,6 +48,12 @@ public class PlayerController : MonoBehaviour
     {
         ReadInput();
         Animate();
+
+        if (inventoryAction != null && inventoryAction.WasPerformedThisFrame())
+        {
+            InventoryUI.Instance.ToggleInventory();
+        }
+
     }
 
     private void FixedUpdate()

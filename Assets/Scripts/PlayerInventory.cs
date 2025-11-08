@@ -24,4 +24,9 @@ public class PlayerInventory : MonoBehaviour
     {
         return items.TryGetValue(item, out int count) ? count : 0;
     }
+
+    public Dictionary<ItemScriptableObject, int> GetAllItems()
+    {
+        return new Dictionary<ItemScriptableObject, int>(items);
+    }
 }
