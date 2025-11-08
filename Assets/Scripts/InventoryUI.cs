@@ -1,33 +1,87 @@
-using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
+    public static InventoryUI Instance { get; private set; }
+
     [Header("References")]
     [SerializeField] private PlayerInventory inventory;
 
-    [Header("Items")]
-    [SerializeField] private ItemScriptableObject woodItem;
-    [SerializeField] private ItemScriptableObject stoneItem;
+    [SerializeField] private GameObject slotPrefab;
+    [SerializeField] private Transform slotParent;
 
-    [Header("Resource UI")]
-    [SerializeField] private TMP_Text woodText;
-    [SerializeField] private TMP_Text stoneText;
+
+    private Canvas canvas;
+    private bool isOpen = false;
+
+    private List<InventorySlotUI> slots = new List<InventorySlotUI>();
+
+
+    private void CreateSlots(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            GameObject newSlot = Instantiate(slotPrefab, slotParent);
+            InventorySlotUI slot = newSlot.GetComponent<InventorySlotUI>();
+            slots.Add(slot);
+        }
+    }
+
+
+    private void Awake()
+    {
+        // Singleton setup
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        canvas = GetComponentInChildren<Canvas>(true);
+        canvas.enabled = false; // Start hidden
+    }
 
     private void Start()
     {
+        // Initialize slots
+        CreateSlots(24);
+
         inventory.OnInventoryChanged += UpdateUI;
         UpdateUI();
     }
 
     private void OnDestroy()
     {
-        inventory.OnInventoryChanged -= UpdateUI;
+        if (inventory != null)
+            inventory.OnInventoryChanged -= UpdateUI;
     }
 
     private void UpdateUI()
     {
-        woodText.text = inventory.GetAmount(woodItem).ToString();
-        stoneText.text = inventory.GetAmount(stoneItem).ToString();
+        int slotIndex = 0;
+        foreach (var itemEntry in inventory.GetAllItems())
+        {
+            if (slotIndex >= slots.Count)
+                break;
+            slots[slotIndex].SetItem(itemEntry.Key, itemEntry.Value);
+            slotIndex++;
+        }
+        // Clear remaining slots
+        for (int i = slotIndex; i < slots.Count; i++)
+        {
+            slots[i].SetItem(null, 0);
+        }
+    }
+
+    public void ToggleInventory()
+    {
+        isOpen = !isOpen;
+        canvas.enabled = isOpen;
+
+        if (isOpen)
+            UpdateUI(); // Refresh UI when opened
     }
 }
