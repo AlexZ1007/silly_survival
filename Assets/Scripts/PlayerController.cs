@@ -1,18 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     InputAction moveAction;
+    InputAction inventoryAction;
+
     Vector2 moveRead;
-    public float speed; 
-    public float rotationSpeed;
+
+
+    public float speed = 5f;
+    public float rotationSpeed = 10f;
 
     private Animator animator;
+    private Rigidbody rb;
 
-    void Start()
+    private void Start()
     {
         moveAction = InputSystem.actions.FindAction("Move");
+        inventoryAction = InputSystem.actions.FindAction("Inventory");
+
 
         if (moveAction == null)
         {
@@ -20,17 +28,37 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            moveAction.Enable(); 
+            moveAction.Enable();
         }
 
+        if (inventoryAction == null)
+            Debug.LogError("The Input Action 'Inventory' could not be found. Check your Input Action Asset setup!");
+        else
+            inventoryAction.Enable();
+
+
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+
+        // Optional: prevent Rigidbody from rotating due to physics
+        rb.freezeRotation = true;
     }
 
-    void Update()
+    private void Update()
     {
         ReadInput();
-        Movement();//aply the movement and rotation every frame
         Animate();
+
+        if (inventoryAction != null && inventoryAction.WasPerformedThisFrame())
+        {
+            InventoryUI.Instance.ToggleInventory();
+        }
+
+    }
+
+    private void FixedUpdate()
+    {
+        Movement(); // Apply movement in physics loop
     }
 
     private void ReadInput()
@@ -38,39 +66,34 @@ public class PlayerController : MonoBehaviour
         moveRead = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
     }
 
-    // Moves the player and rotates them to face the movement direction
     private void Movement()
     {
         Vector3 movementVector = new Vector3(moveRead.x, 0, moveRead.y);
 
-        if (movementVector.magnitude > 1)
+        if (movementVector.sqrMagnitude > 1f)
         {
             movementVector.Normalize();
         }
 
+        // Move using Rigidbody
+        Vector3 targetPosition = rb.position + movementVector * speed * Time.fixedDeltaTime;
+        rb.MovePosition(targetPosition);
+
+        // Rotate towards movement direction
         if (movementVector != Vector3.zero)
         {
-            //calculate the target rotation that faces the movement direction
             Quaternion targetRotation = Quaternion.LookRotation(movementVector);
-
-            //smoothy rotate towords the target rotation
-            transform.rotation = Quaternion.RotateTowards(
-                transform.rotation,
-                targetRotation,
-                rotationSpeed * Time.deltaTime
-            );
+            Quaternion smoothedRotation = Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+            rb.MoveRotation(smoothedRotation);
         }
-
-        transform.position += movementVector * Time.deltaTime * speed;
     }
 
-    // Control the Animator smoothly
     private void Animate()
     {
         if (animator != null)
         {
             float currentSpeed = moveRead.magnitude;
-            animator.SetFloat("Speed", currentSpeed, 0.1f, Time.deltaTime); // damping for smooth blend
+            animator.SetFloat("Speed", currentSpeed, 0.1f, Time.deltaTime);
         }
     }
 }
