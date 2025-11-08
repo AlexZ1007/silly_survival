@@ -17,5 +17,9 @@
 
 3. Deschide scena principală din: **Assets/Scenes**
 
+## Controale
+- WASD - miscare
+- I - inventar
+
 ## Feedback 
 Ne-am dori sa primim feedback-ul la adresa de email Istocsimona23@gmail.com.
