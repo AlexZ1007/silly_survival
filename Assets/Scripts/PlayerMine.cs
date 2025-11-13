@@ -1,23 +1,31 @@
+
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMine : MonoBehaviour
 {
-    [Header("Mining Settings")]
-    public GameObject stonePrefab;       // prefab to spawn after mining
-    public float interactRange = 2f;     // how close the player must be
-    public LayerMask rockLayerMask;      // optional: layer for rocks
-    public string rockTag = "Rock";      // or use tag
+    [Header("Settings")]
+    public GameObject stonePrefab;
+    public float interactRange = 2f;
+    public LayerMask rockLayerMask;
+    public string rockTag = "Rock";
 
-    [Header("Mining Timing")]
-    public float mineHoldTime = 3f;      // how long to hold key
-    private float mineTimer = 0f;
-    private bool isChopping = false;
-    private Collider targetRock;
+    [Header("Timing")]
+    public float holdTime = 3f; // time to hold key
+    private float timer = 0f;
+    private bool isWorking = false;
+    private Collider target;
 
-    [Header("Input Key")]
-    public KeyCode mineKey = KeyCode.C;  // press & hold this key to mine
+    [Header("Input")]
+    public KeyCode actionKey = KeyCode.C;
+
+    [Header("Respawn")]
+    public float respawnTime = 1800f; // time until rock respawns
 
     private Animator animator;
+
+    public WeaponSwitcher weaponSwitcher;
+
 
     private void Start()
     {
@@ -26,100 +34,102 @@ public class PlayerMine : MonoBehaviour
 
     private void Update()
     {
-        bool holdingMineKey = Input.GetKey(mineKey);
-        animator?.SetBool("IsCPressed", holdingMineKey); // optional animation parameter
+        bool holdingKey = Input.GetKey(actionKey);
+        animator?.SetBool("IsCPressed", holdingKey);
 
-        if (holdingMineKey)
+        if (holdingKey)
         {
-            // Start or continue mining
-            if (!isChopping)
+            if (!isWorking)
             {
-                targetRock = FindNearestRock();
-                if (targetRock != null)
+                target = FindNearestTarget();
+                if (target != null)
                 {
-                    isChopping = true;
-                    mineTimer = 0f;
+                    isWorking = true;
+                    timer = 0f;
                     Debug.Log("Started mining...");
                 }
             }
 
-            if (isChopping)
+            if (isWorking)
             {
-                mineTimer += Time.deltaTime;
-
-                if (mineTimer >= mineHoldTime)
+                timer += Time.deltaTime;
+                if (timer >= holdTime)
                 {
-                    MineRock(targetRock);
-                    ResetMining();
+                    PerformAction(target);
+                    ResetAction();
                 }
             }
         }
         else
         {
-            // Released key early -> cancel mining
-            if (isChopping)
+            if (isWorking)
             {
                 Debug.Log("Mining cancelled — released key too soon.");
-                ResetMining();
+                ResetAction();
             }
         }
     }
 
-    private void ResetMining()
+    private void ResetAction()
     {
-        isChopping = false;
-        mineTimer = 0f;
-        targetRock = null;
+        isWorking = false;
+        timer = 0f;
+        target = null;
     }
 
-    private Collider FindNearestRock()
+    private Collider FindNearestTarget()
     {
-        Collider[] hits;
+        Collider[] hits = rockLayerMask != 0
+            ? Physics.OverlapSphere(transform.position, interactRange, rockLayerMask)
+            : Physics.OverlapSphere(transform.position, interactRange);
 
-        if (rockLayerMask != 0)
-            hits = Physics.OverlapSphere(transform.position, interactRange, rockLayerMask);
-        else
-            hits = Physics.OverlapSphere(transform.position, interactRange);
-
-        Collider nearestRock = null;
+        Collider nearest = null;
         float nearestSqr = float.MaxValue;
 
         foreach (var col in hits)
         {
             if (col == null) continue;
-
-            if (!string.IsNullOrEmpty(rockTag) && !col.CompareTag(rockTag))
-                continue;
+            if (!string.IsNullOrEmpty(rockTag) && !col.CompareTag(rockTag)) continue;
 
             float sqr = (col.transform.position - transform.position).sqrMagnitude;
             if (sqr < nearestSqr)
             {
                 nearestSqr = sqr;
-                nearestRock = col;
+                nearest = col;
             }
         }
 
-        return nearestRock;
+        return nearest;
     }
 
-    private void MineRock(Collider rock)
+    private void PerformAction(Collider target)
     {
-        if (rock == null)
+        if (weaponSwitcher != null && weaponSwitcher.IsUsingAxe)
+        {
+            Debug.Log("You need a pickaxe to mine!");
+            return; // exit if wrong tool
+        }
+
+        if (target == null)
         {
             Debug.Log("No rock to mine.");
             return;
         }
 
-        Vector3 spawnPos = rock.transform.position;
-        Quaternion spawnRot = rock.transform.rotation;
-
         if (stonePrefab != null)
-            Instantiate(stonePrefab, spawnPos, spawnRot);
+            Instantiate(stonePrefab, target.transform.position, target.transform.rotation);
         else
             Debug.LogWarning("Stone prefab not assigned on PlayerMine.");
 
-        Destroy(rock.transform.root.gameObject);
-        Debug.Log("Rock mined successfully after holding key!");
+        StartCoroutine(Respawn(target.gameObject, respawnTime));
+    }
+
+
+    private IEnumerator Respawn(GameObject obj, float delay)
+    {
+        obj.SetActive(false);            // hide the rock
+        yield return new WaitForSeconds(delay);
+        obj.SetActive(true);             // show the rock again
     }
 
     private void OnDrawGizmosSelected()

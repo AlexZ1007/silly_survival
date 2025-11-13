@@ -1,20 +1,30 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerChop : MonoBehaviour
 {
-    [Header("Chop Settings")]
+    [Header("Settings")]
     public GameObject logPrefab;
     public float interactRange = 2f;
     public LayerMask treeLayerMask;
     public string treeTag = "Tree";
 
-    [Header("Chop Timing")]
-    public float chopHoldTime = 3f; // how long you must hold C
-    private float chopTimer = 0f;
-    private bool isChopping = false;
+    [Header("Timing")]
+    public float holdTime = 3f; // time to hold key
+    private float timer = 0f;
+    private bool isWorking = false;
+    private Collider target;
+
+    [Header("Input")]
+    public KeyCode actionKey = KeyCode.C;
+
+    [Header("Respawn")]
+    public float respawnTime = 1800f; // time until tree respawns
 
     private Animator animator;
-    private Collider targetTree;
+
+    public WeaponSwitcher weaponSwitcher;
+
 
     private void Start()
     {
@@ -23,101 +33,102 @@ public class PlayerChop : MonoBehaviour
 
     private void Update()
     {
-        bool holdingC = Input.GetKey(KeyCode.C);
-        animator?.SetBool("IsCPressed", holdingC);
+        bool holdingKey = Input.GetKey(actionKey);
+        animator?.SetBool("IsCPressed", holdingKey);
 
-        if (holdingC)
+        if (holdingKey)
         {
-            // Start or continue chopping
-            if (!isChopping)
+            if (!isWorking)
             {
-                targetTree = FindNearestTree();
-                if (targetTree != null)
+                target = FindNearestTarget();
+                if (target != null)
                 {
-                    isChopping = true;
-                    chopTimer = 0f;
+                    isWorking = true;
+                    timer = 0f;
                     Debug.Log("Started chopping...");
                 }
             }
 
-            if (isChopping)
+            if (isWorking)
             {
-                chopTimer += Time.deltaTime;
-
-                // Optional: show progress bar, play animation, etc.
-                if (chopTimer >= chopHoldTime)
+                timer += Time.deltaTime;
+                if (timer >= holdTime)
                 {
-                    ChopTree(targetTree);
-                    ResetChop();
+                    PerformAction(target);
+                    ResetAction();
                 }
             }
         }
         else
         {
-            // Released the key early -> cancel chop
-            if (isChopping)
+            if (isWorking)
             {
-                Debug.Log("Chop cancelled — released C too soon.");
-                ResetChop();
+                Debug.Log("Chop cancelled — released key too soon.");
+                ResetAction();
             }
         }
     }
 
-    private void ResetChop()
+    private void ResetAction()
     {
-        isChopping = false;
-        chopTimer = 0f;
-        targetTree = null;
+        isWorking = false;
+        timer = 0f;
+        target = null;
     }
 
-    private Collider FindNearestTree()
+    private Collider FindNearestTarget()
     {
-        Collider[] hits;
+        Collider[] hits = treeLayerMask != 0
+            ? Physics.OverlapSphere(transform.position, interactRange, treeLayerMask)
+            : Physics.OverlapSphere(transform.position, interactRange);
 
-        if (treeLayerMask != 0)
-            hits = Physics.OverlapSphere(transform.position, interactRange, treeLayerMask);
-        else
-            hits = Physics.OverlapSphere(transform.position, interactRange);
-
-        Collider nearestTree = null;
+        Collider nearest = null;
         float nearestSqr = float.MaxValue;
 
         foreach (var col in hits)
         {
             if (col == null) continue;
-
-            if (!string.IsNullOrEmpty(treeTag) && !col.CompareTag(treeTag))
-                continue;
+            if (!string.IsNullOrEmpty(treeTag) && !col.CompareTag(treeTag)) continue;
 
             float sqr = (col.transform.position - transform.position).sqrMagnitude;
             if (sqr < nearestSqr)
             {
                 nearestSqr = sqr;
-                nearestTree = col;
+                nearest = col;
             }
         }
 
-        return nearestTree;
+        return nearest;
     }
 
-    private void ChopTree(Collider tree)
+    private void PerformAction(Collider target)
     {
-        if (tree == null)
+        if (weaponSwitcher != null && !weaponSwitcher.IsUsingAxe)
+        {
+            Debug.Log("You need an axe to chop!");
+            return; // exit if wrong tool
+        }
+
+        if (target == null)
         {
             Debug.Log("No tree to chop.");
             return;
         }
 
-        Vector3 spawnPos = tree.transform.position;
-        Quaternion spawnRot = tree.transform.rotation;
-
         if (logPrefab != null)
-            Instantiate(logPrefab, spawnPos, spawnRot);
+            Instantiate(logPrefab, target.transform.position, target.transform.rotation);
         else
             Debug.LogWarning("Log prefab not assigned on PlayerChop.");
 
-        Destroy(tree.transform.root.gameObject);
-        Debug.Log("Tree chopped successfully after hold!");
+        StartCoroutine(Respawn(target.gameObject, respawnTime));
+    }
+
+
+    private IEnumerator Respawn(GameObject obj, float delay)
+    {
+        obj.SetActive(false);            // hide the tree
+        yield return new WaitForSeconds(delay);
+        obj.SetActive(true);             // show the tree again
     }
 
     private void OnDrawGizmosSelected()
