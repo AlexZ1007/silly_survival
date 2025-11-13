@@ -5,13 +5,14 @@ using UnityEngine;
 public class InventoryUI : MonoBehaviour
 {
     public static InventoryUI Instance { get; private set; }
+    
 
     [Header("References")]
     [SerializeField] private PlayerInventory inventory;
 
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private Transform slotParent;
-
+    [SerializeField] private int numberOfSlots;
 
     private Canvas canvas;
     private bool isOpen = false;
@@ -47,7 +48,7 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         // Initialize slots
-        CreateSlots(24);
+        CreateSlots(numberOfSlots);
 
         inventory.OnInventoryChanged += UpdateUI;
         UpdateUI();

@@ -5,13 +5,15 @@ using TMPro;
 public class InventorySlotUI : MonoBehaviour
 {
     [SerializeField] private Image icon;
+    [SerializeField] private Sprite emptySlotIcon;
     [SerializeField] private TMP_Text countText;
 
     public void SetItem(ItemScriptableObject item, int amount)
     {
         if (item == null || amount <= 0)
         {
-            icon.enabled = false;
+            icon.enabled = true;
+            icon.sprite = emptySlotIcon;
             countText.text = "";
         }
         else
