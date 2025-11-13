@@ -2,13 +2,12 @@
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     InputAction moveAction;
     InputAction inventoryAction;
 
     Vector2 moveRead;
-
 
     public float speed = 5f;
     public float rotationSpeed = 10f;
@@ -21,26 +20,21 @@ public class PlayerController : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         inventoryAction = InputSystem.actions.FindAction("Inventory");
 
-
         if (moveAction == null)
         {
             Debug.LogError("The Input Action 'Move' could not be found. Check your Input Action Asset setup!");
         }
-        else
-        {
-            moveAction.Enable();
-        }
+        else moveAction.Enable();
 
         if (inventoryAction == null)
+        {
             Debug.LogError("The Input Action 'Inventory' could not be found. Check your Input Action Asset setup!");
-        else
-            inventoryAction.Enable();
-
+        }
+        else inventoryAction.Enable();
 
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
-        // Optional: prevent Rigidbody from rotating due to physics
         rb.freezeRotation = true;
     }
 
@@ -53,12 +47,11 @@ public class PlayerController : MonoBehaviour
         {
             InventoryUI.Instance.ToggleInventory();
         }
-
     }
 
     private void FixedUpdate()
     {
-        Movement(); // Apply movement in physics loop
+        Movement();
     }
 
     private void ReadInput()
@@ -71,15 +64,11 @@ public class PlayerController : MonoBehaviour
         Vector3 movementVector = new Vector3(moveRead.x, 0, moveRead.y);
 
         if (movementVector.sqrMagnitude > 1f)
-        {
             movementVector.Normalize();
-        }
 
-        // Move using Rigidbody
         Vector3 targetPosition = rb.position + movementVector * speed * Time.fixedDeltaTime;
         rb.MovePosition(targetPosition);
 
-        // Rotate towards movement direction
         if (movementVector != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(movementVector);
