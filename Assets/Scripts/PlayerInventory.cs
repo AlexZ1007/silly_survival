@@ -29,4 +29,20 @@ public class PlayerInventory : MonoBehaviour
     {
         return new Dictionary<ItemScriptableObject, int>(items);
     }
+
+    public void RemoveItem(ItemScriptableObject item, int amount = 1)
+    {
+        if (items.ContainsKey(item))
+        {
+            items[item] -= amount;
+            if (items[item] <= 0)
+                items.Remove(item);
+            Debug.Log($"Removed {amount}x {item.itemName}. Remaining: {GetAmount(item)}");
+            OnInventoryChanged?.Invoke();
+        }
+        else
+        {
+            Debug.LogWarning($"Attempted to remove {item.itemName} which is not in inventory.");
+        }
+    }
 }

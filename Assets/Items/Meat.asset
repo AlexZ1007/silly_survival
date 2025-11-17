@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8142f93615cd27441bba19b5318fc0f2, type: 3}
-  m_Name: Sword
+  m_Name: Meat
   m_EditorClassIdentifier: 
-  itemName: Sword
-  icon: {fileID: 21300000, guid: 37c74cb1b44ec6043a027b3f6de95075, type: 3}
+  itemName: Meat
+  icon: {fileID: 21300000, guid: 8bf7661c858d4a7418b7b5b2c97cae65, type: 3}
