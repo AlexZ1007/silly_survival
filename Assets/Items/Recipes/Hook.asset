@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82fd28e283c406544ac60ec42893aa72, type: 3}
+  m_Name: Hook
+  m_EditorClassIdentifier: 
+  ingredients:
+  - item: {fileID: 11400000, guid: 788769ec79c508f41a997c71a64fdb46, type: 2}
+    amount: 3
+  resultItem: {fileID: 11400000, guid: e8e7b892b6d72fb449baba8941a2e1d5, type: 2}
+  requiredStation: {fileID: 11400000, guid: 5eddc6f7cc8f5104c9f1f60739202d8d, type: 2}
