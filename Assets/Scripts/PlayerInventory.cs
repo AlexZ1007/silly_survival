@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,4 +45,24 @@ public class PlayerInventory : MonoBehaviour
             Debug.LogWarning($"Attempted to remove {item.itemName} which is not in inventory.");
         }
     }
+
+    public List<RecipieScriptable> GetVisibleRecipes(RecipeDatabase database)
+    {
+        List<RecipieScriptable> result = new List<RecipieScriptable>();
+
+        foreach (var recipe in database.allRecipes)
+        {
+            foreach (var ingredient in recipe.ingredients)
+            {
+                if (this.GetAmount(ingredient.item) > 0)
+                {
+                    result.Add(recipe);
+                    break; 
+                }
+            }
+        }
+
+        return result;
+    }
+
 }
