@@ -20,6 +20,8 @@
 ## Controale
 - WASD - miscare
 - I - inventar
+- C - mineaza / taie
+- Z - schimba unealta
 
 ## Feedback 
 Ne-am dori sa primim feedback-ul la adresa de email Istocsimona23@gmail.com.
