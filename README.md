@@ -15,7 +15,7 @@
    git clone https://github.com/AlexZ1007/silly_survival.git
 2. Deschide Unity Hub și adaugă proiectul folosind **Add project from disk**.
 
-3. Deschide scena principală din: **Assets/Scenes**
+3. Deschide scena **SampleScene** din: **Assets/Scenes** 
 
 ## Controale
 - WASD - miscare
