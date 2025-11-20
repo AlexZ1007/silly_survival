@@ -5,21 +5,19 @@ public class WeaponSwitcher : MonoBehaviour
     [Header("Weapons")]
     public GameObject axe;
     public GameObject pickaxe;
+    public GameObject shovel;
+    public GameObject weapon;
 
-    [Header("State")]
-    [SerializeField] private bool usingAxe = true; // private, but visible in Inspector
-
-    // Public getter so other scripts can check which weapon is active
-    public bool IsUsingAxe
-    {
-        get { return usingAxe; }
-    }
+    private GameObject[] weapons;
+    private int currentIndex = 0; // 0 = axe, 1 = pickaxe, 2 = shovel, 3 = weapon
 
     void Start()
     {
-        // Start with axe active
-        axe.SetActive(true);
-        pickaxe.SetActive(false);
+        // Create array of weapons in order
+        weapons = new GameObject[] { axe, pickaxe, shovel, weapon };
+
+        // Activate only the first one
+        ActivateWeapon(currentIndex);
     }
 
     void Update()
@@ -32,11 +30,30 @@ public class WeaponSwitcher : MonoBehaviour
 
     void SwitchWeapon()
     {
-        usingAxe = !usingAxe;
+        currentIndex++;
 
-        axe.SetActive(usingAxe);
-        pickaxe.SetActive(!usingAxe);
+        // Loop back when reaching the end
+        if (currentIndex >= weapons.Length)
+            currentIndex = 0;
 
-        Debug.Log("Switched to " + (usingAxe ? "Axe" : "Pickaxe"));
+        ActivateWeapon(currentIndex);
+
+        Debug.Log("Switched to: " + weapons[currentIndex].name);
     }
+
+    void ActivateWeapon(int index)
+    {
+        // Disable all weapons
+        foreach (GameObject w in weapons)
+            w.SetActive(false);
+
+        // Enable the selected weapon
+        weapons[index].SetActive(true);
+    }
+
+    // Optional: Quick checks for other scripts
+    public bool IsUsingAxe => currentIndex == 0;
+    public bool IsUsingPickaxe => currentIndex == 1;
+    public bool IsUsingShovel => currentIndex == 2;
+    public bool IsUsingWeapon => currentIndex == 3;
 }
