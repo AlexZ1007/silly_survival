@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb747cbd401ee594194aee772b6d484f, type: 3}
+  m_Name: Gold
+  m_EditorClassIdentifier: 
+  actionName: Mine Gold
+  holdTime: 3
+  respawnTime: 1800
+  allowedTools: 02000000
+  drops:
+  - {fileID: 5492741827911542987, guid: 2306b89b12292d9499137d1b6854052e, type: 3}
+  - {fileID: 1565465813816044204, guid: c5cb56a734df1214bbef6ced051124d0, type: 3}
