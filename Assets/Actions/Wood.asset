@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Wood
   m_EditorClassIdentifier: 
   actionName: Chop Wood
-  holdTime: 3
+  toolRequirements:
+  - tool: 1
+    holdTime: 8
+  - tool: 2
+    holdTime: 5
+  - tool: 3
+    holdTime: 3
   respawnTime: 150
-  allowedTools: 01000000
   drops:
   - {fileID: 2299900259112861600, guid: 3c9fb982bf9d8ed45823e3ec0ac35c0a, type: 3}

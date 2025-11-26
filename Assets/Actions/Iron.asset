@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: Iron
   m_EditorClassIdentifier: 
   actionName: 
-  holdTime: 3
+  toolRequirements:
+  - tool: 4
+    holdTime: 8
+  - tool: 5
+    holdTime: 5
+  - tool: 6
+    holdTime: 3
   respawnTime: 1800
-  allowedTools: 02000000
   drops:
   - {fileID: 3618844828861315703, guid: 39a75ee476885a24391c3df467bc2304, type: 3}
   - {fileID: 1565465813816044204, guid: c5cb56a734df1214bbef6ced051124d0, type: 3}
