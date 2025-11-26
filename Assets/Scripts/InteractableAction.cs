@@ -3,22 +3,34 @@ using UnityEngine;
 public class InteractableAction : ScriptableObject
 {
     public string actionName;//action name
-    public float holdTime = 3f;//how long to hold the action key
+
+    [System.Serializable]
+    public struct ToolRequirement
+    {
+        public WeaponType tool;
+        public float holdTime;//how long to hold the action key
+    }
+
+    public ToolRequirement[] toolRequirements; // Assign in inspector
     public float respawnTime = 150f;// how long until the object respawns
-
-
-    public WeaponType[] allowedTools;//list of tools allowed for this action
-
-    // prefabs that spawn when action is complete
     public GameObject[] drops;
+   
 
-    
+
     public enum WeaponType
     {
         None,
-        Axe,
-        Pickaxe,
-        Shovel,
-        Weapon
+        Axe1,
+        Axe2,
+        Axe3,
+        Pickaxe1,
+        Pickaxe2,
+        Pickaxe3,
+        Shovel1,
+        Shovel2,
+        Shovel3,
+        Bat,
+        Sword
     }
+
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class CraftButton : MonoBehaviour
 {
     private CraftingSystem craftingSystem;
-    private RecipieScriptable recipe;
+    private RecipeScriptable recipe;
 
     void Awake()
     {
@@ -11,7 +11,7 @@ public class CraftButton : MonoBehaviour
             craftingSystem = Object.FindFirstObjectByType<CraftingSystem>();
     }
 
-    public void SetRecipe(RecipieScriptable newRecipe)
+    public void SetRecipe(RecipeScriptable newRecipe)
     {
         recipe = newRecipe;
     }

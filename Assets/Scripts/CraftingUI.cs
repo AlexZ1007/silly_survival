@@ -29,9 +29,9 @@ public class CraftingUI : MonoBehaviour
         ClearRecipeUI();
 
         // ⭐ You already have this in PlayerInventory
-        List<RecipieScriptable> visibleRecipes = playerInventory.GetVisibleRecipes(recipeDatabase);
+        List<RecipeScriptable> visibleRecipes = playerInventory.GetVisibleRecipes(recipeDatabase);
 
-        foreach (RecipieScriptable recipe in visibleRecipes)
+        foreach (RecipeScriptable recipe in visibleRecipes)
         {
             GameObject obj = Instantiate(fullRecipePrefab, recipeListParent);
 

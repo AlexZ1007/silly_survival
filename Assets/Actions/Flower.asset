@@ -15,6 +15,6 @@ MonoBehaviour:
   actionName: Shovel and Chop Flower
   holdTime: 3
   respawnTime: 150
-  allowedTools: 0300000001000000
+  allowedTools: 03000000
   drops:
   - {fileID: 4115184616908225753, guid: 4104ee1b77e44dc4c95e8b15dd0e18ca, type: 3}

@@ -2,8 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "RecipieScriptable", menuName = "Scriptable Objects/RecipieScriptable")]
-public class RecipieScriptable : ScriptableObject
+public class RecipeScriptable : ScriptableObject
 {
     [SerializeField] public List<IngredientEntry> ingredients;
     [SerializeField] public ItemScriptableObject resultItem;

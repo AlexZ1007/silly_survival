@@ -15,6 +15,6 @@ MonoBehaviour:
   actionName: Chovel and Chop Grass
   holdTime: 3
   respawnTime: 150
-  allowedTools: 0300000001000000
+  allowedTools: 03000000
   drops:
   - {fileID: 5244451269481508202, guid: a62f4c4e1ed3f3f44a28a30e56b352c7, type: 3}
