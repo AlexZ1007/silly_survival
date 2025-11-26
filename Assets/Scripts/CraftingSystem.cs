@@ -4,7 +4,7 @@ public class CraftingSystem : MonoBehaviour
 {
     public PlayerInventory playerInventory;
 
-    public bool TryCraft(RecipieScriptable recipe)
+    public bool TryCraft(RecipeScriptable recipe)
     {
         // 1. Check if player has all ingredients
         foreach (var entry in recipe.ingredients)

@@ -15,7 +15,7 @@ MonoBehaviour:
   actionName: Chop/SHovel Fruit Bush
   holdTime: 3
   respawnTime: 150
-  allowedTools: 0100000003000000
+  allowedTools: 03000000
   drops:
   - {fileID: 8035307218074225126, guid: 7ac9836f2d5068747a8846611c897258, type: 3}
   - {fileID: 5244451269481508202, guid: a62f4c4e1ed3f3f44a28a30e56b352c7, type: 3}

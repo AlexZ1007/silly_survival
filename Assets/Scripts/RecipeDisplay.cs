@@ -12,10 +12,10 @@ public class RecipeDisplay : MonoBehaviour
     public Image resultButtonImage;
 
     [Header("Recipe To Show")]
-    public RecipieScriptable recipeToDisplay;
+    public RecipeScriptable recipeToDisplay;
 
 
-    public void Initialize(RecipieScriptable recipe)
+    public void Initialize(RecipeScriptable recipe)
     {
         recipeToDisplay = recipe;
         DisplayRecipe(recipe);
@@ -25,7 +25,7 @@ public class RecipeDisplay : MonoBehaviour
     }
 
 
-    public void DisplayRecipe(RecipieScriptable recipe)
+    public void DisplayRecipe(RecipeScriptable recipe)
     {
         // Hide all ingredient slots first
         foreach (var slot in ingredientSlots)

@@ -46,9 +46,9 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public List<RecipieScriptable> GetVisibleRecipes(RecipeDatabase database)
+    public List<RecipeScriptable> GetVisibleRecipes(RecipeDatabase database)
     {
-        List<RecipieScriptable> result = new List<RecipieScriptable>();
+        List<RecipeScriptable> result = new List<RecipeScriptable>();
 
         foreach (var recipe in database.allRecipes)
         {
