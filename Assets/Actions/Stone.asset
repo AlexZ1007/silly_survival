@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Stone
   m_EditorClassIdentifier: 
   actionName: Mine Stone
-  holdTime: 3
+  toolRequirements:
+  - tool: 4
+    holdTime: 8
+  - tool: 5
+    holdTime: 5
+  - tool: 6
+    holdTime: 3
   respawnTime: 1800
-  allowedTools: 02000000
   drops:
   - {fileID: 1565465813816044204, guid: c5cb56a734df1214bbef6ced051124d0, type: 3}

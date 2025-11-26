@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Snow
   m_EditorClassIdentifier: 
   actionName: Shovel Snow
-  holdTime: 3
+  toolRequirements:
+  - tool: 7
+    holdTime: 5
+  - tool: 8
+    holdTime: 3
+  - tool: 9
+    holdTime: 1
   respawnTime: 150
-  allowedTools: 03000000
   drops:
   - {fileID: 4276997458118356432, guid: 79ca3edca67a7c4478d0cf8133c3a64c, type: 3}
