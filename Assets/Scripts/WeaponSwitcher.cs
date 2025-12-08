@@ -1,72 +1,99 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static InteractableAction;
 
 public class WeaponSwitcher : MonoBehaviour
 {
-    [Header("Weapons")]//assign all weapon prefabs in the inspector
-    public GameObject axe1;
-    public GameObject axe2;
-    public GameObject axe3;
-    public GameObject pickaxe1;
-    public GameObject pickaxe2;
-    public GameObject pickaxe3;
-    public GameObject shovel1;
-    public GameObject shovel2;
-    public GameObject shovel3;
-    public GameObject bat;
-    public GameObject sword;
+    [Header("All Possible Tools (in player hand, can be disabled)")]
+    public GameObject[] allTools; // drag all tool prefabs from player hand
 
-    private GameObject[] weapons;//array to store all wapons for easy switching
-    private int currentIndex = 0;//index of currently active weapon
+    [Header("References")]
+    public PlayerInventory playerInventory; // assign your PlayerInventory here
+    public KeyCode switchKey = KeyCode.Z;   // key to switch tools
+
+    private List<GameObject> ownedTools = new List<GameObject>(); // currently switchable tools
+    private int currentIndex = 0; // current active tool index in ownedTools
 
     void Start()
     {
-        //fill array with all wapons
-        weapons = new GameObject[] { axe1, axe2, axe3, pickaxe1, pickaxe2, pickaxe3, shovel1, shovel2, shovel3, bat, sword };
-        ActivateWeapon(currentIndex);//first weapon
+        if (playerInventory == null)
+            playerInventory = FindFirstObjectByType<PlayerInventory>();
+
+        UpdateOwnedTools();
+        ActivateTool(currentIndex);
+
+        // Subscribe to inventory changes to update tools dynamically
+        playerInventory.OnInventoryChanged += UpdateOwnedTools;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-            SwitchWeapon();//check if z is pressed for switching
+        if (Input.GetKeyDown(switchKey) && ownedTools.Count > 1)
+        {
+            currentIndex++;
+            if (currentIndex >= ownedTools.Count)
+                currentIndex = 0;
+
+            ActivateTool(currentIndex);
+        }
     }
 
-    void SwitchWeapon()
+    // Enable only the current tool
+    void ActivateTool(int index)
     {
-        currentIndex++;
-        if (currentIndex >= weapons.Length) currentIndex = 0;//lopp back to first if out of range
-        ActivateWeapon(currentIndex);//activate selected weapon
-        Debug.Log("Switched to: " + weapons[currentIndex].name);
+        for (int i = 0; i < allTools.Length; i++)
+            allTools[i].SetActive(false);
+
+        if (ownedTools.Count == 0) return;
+
+        ownedTools[index].SetActive(true);
+        Debug.Log("Switched to: " + ownedTools[index].name);
     }
 
-    void ActivateWeapon(int index)//deactivate all weapons except the one at the given index
+    // Rebuild the list of owned tools based on the inventory
+    void UpdateOwnedTools()
     {
-        foreach (var w in weapons)
-            w.SetActive(false);
-        weapons[index].SetActive(true);
+        ownedTools.Clear();
+
+        foreach (var toolObj in allTools)
+        {
+            var toolItem = toolObj.GetComponent<ToolItemHolder>();
+            if (toolItem == null) continue;
+
+            if (playerInventory.GetAmount(toolItem.item) > 0)
+            {
+                ownedTools.Add(toolObj);
+            }
+        }
+
+        if (ownedTools.Count == 0)
+        {
+            currentIndex = 0;
+            return;
+        }
+
+        if (currentIndex >= ownedTools.Count)
+            currentIndex = 0;
+
+        ActivateTool(currentIndex);
     }
 
-    
-    public WeaponType CurrentWeaponType//returns the type of the currently active weapon
+
+    // Return currently active WeaponType for PlayerAction
+    public WeaponType CurrentWeaponType
     {
         get
         {
-            switch (currentIndex)
-            {
-                case 0: return WeaponType.Axe1;
-                case 1: return WeaponType.Axe2;
-                case 2: return WeaponType.Axe3;
-                case 3: return WeaponType.Pickaxe1;
-                case 4: return WeaponType.Pickaxe2;
-                case 5: return WeaponType.Pickaxe3;
-                case 6: return WeaponType.Shovel1;
-                case 7: return WeaponType.Shovel2;
-                case 8: return WeaponType.Shovel3;
-                case 9: return WeaponType.Bat;
-                case 10: return WeaponType.Sword;
-                default: return WeaponType.None;
-            }
+            if (ownedTools.Count == 0) return WeaponType.None;
+
+            var toolItem = ownedTools[currentIndex].GetComponent<ToolItemHolder>();
+            return toolItem != null ? toolItem.weaponType : WeaponType.None;
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (playerInventory != null)
+            playerInventory.OnInventoryChanged -= UpdateOwnedTools;
     }
 }
