@@ -52,7 +52,10 @@ public class PlayerInventory : MonoBehaviour
         List<RecipeScriptable> result = new List<RecipeScriptable>();
 
         foreach (var recipe in database.allRecipes)
-        {
+        {   
+            if(recipe.requiredStation != null && this.GetAmount(recipe.requiredStation) <= 0)
+                continue;
+
             foreach (var ingredient in recipe.ingredients)
             {
                 if (this.GetAmount(ingredient.item) > 0)
