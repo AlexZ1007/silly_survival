@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82fd28e283c406544ac60ec42893aa72, type: 3}
-  m_Name: Reinforced hook
+  m_Name: Bread
   m_EditorClassIdentifier: 
   ingredients:
-  - item: {fileID: 11400000, guid: e8e7b892b6d72fb449baba8941a2e1d5, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: 5e5b45d63f8aa9f4dae66c20714f6b63, type: 2}
-    amount: 2
-  resultItem: {fileID: 11400000, guid: 04ece74d2f9f73c4e93dbbc49865e6ad, type: 2}
-  requiredStation: {fileID: 11400000, guid: 5eddc6f7cc8f5104c9f1f60739202d8d, type: 2}
+  - item: {fileID: 11400000, guid: 972ca0b98b0388d43b6d7750d542948b, type: 2}
+    amount: 3
+  resultItem: {fileID: 11400000, guid: 3c0c3231e7e324b449840167ad5573ac, type: 2}
+  requiredStation: {fileID: 11400000, guid: 1400f0d55ce7b6342bf92fef4325fe75, type: 2}

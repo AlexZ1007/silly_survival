@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82fd28e283c406544ac60ec42893aa72, type: 3}
-  m_Name: Reinforced hook
+  m_Name: Axe 3
   m_EditorClassIdentifier: 
   ingredients:
-  - item: {fileID: 11400000, guid: e8e7b892b6d72fb449baba8941a2e1d5, type: 2}
+  - item: {fileID: 11400000, guid: 62f05f4941fdf3c49b9d7c0e20942681, type: 2}
     amount: 1
   - item: {fileID: 11400000, guid: 5e5b45d63f8aa9f4dae66c20714f6b63, type: 2}
-    amount: 2
-  resultItem: {fileID: 11400000, guid: 04ece74d2f9f73c4e93dbbc49865e6ad, type: 2}
+    amount: 4
+  - item: {fileID: 11400000, guid: 47d674ae9977c344c860a11fed78aab5, type: 2}
+    amount: 1
+  resultItem: {fileID: 11400000, guid: 96a6bdd852f2db04593307b26fc036f1, type: 2}
   requiredStation: {fileID: 11400000, guid: 5eddc6f7cc8f5104c9f1f60739202d8d, type: 2}
