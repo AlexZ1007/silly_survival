@@ -9,23 +9,30 @@ public class PlayerAction : MonoBehaviour
     [Header("Input")]//key used to perform the action
     public KeyCode actionKey = KeyCode.C;
 
+    [Header("Hold Settings")]
+    public float holdHitInterval = 0.6f; // time between hits when holding
+
+
     [Header("Reference")]//reference to weapon Swithcer system
     public WeaponSwitcher weaponSwitcher;
 
     [Header("Interaction")]//how far the player can interact
     public float interactionRadius = 3f;
 
+    private Collider cachedTarget;
+    private Resource cachedResource;
+    private Animator animator;//animator reference
+    private InteractableAction action; // dynamic action based on object interacted with
+
     [Header("UI")]
     public ProgressBar progressBar; // drag your UI ProgressBar here in the inspector
 
+    private Resource hoveredResource;
+    private ProgressBar hoveredBar;
 
+    private float nextAllowedHitTime;
+    private bool isHolding;
 
-    private float timer = 0f;//counts hold time
-    private bool isWorking = false;//bool if player is currently perfoming the action
-    private Collider target;//resource being interacted with
-    private Animator animator;//animator reference
-
-    private InteractableAction action; // dynamic action based on object interacted with
 
     private void Start()
     {
@@ -34,121 +41,90 @@ public class PlayerAction : MonoBehaviour
 
     private void Update()
     {
-        bool holdingKey = Input.GetKey(actionKey);//track if the key is pressed
-        animator?.SetBool("IsCPressed", holdingKey);//bool for animation
+        HandleProximityUI();
 
-        //1. NOT WORKING -> try to start action 
-        if (!isWorking)
+        bool pressed = Input.GetKeyDown(actionKey);
+        bool held = Input.GetKey(actionKey);
+
+        if (pressed)
+            TryStartHit();
+
+        if (held && Time.time >= nextAllowedHitTime)
+            TryStartHit();
+    }
+    private void TryStartHit()
+    {
+        cachedTarget = FindNearestTarget();
+        if (cachedTarget == null) return;
+
+        cachedResource = cachedTarget.GetComponent<Resource>();
+        if (cachedResource == null) return;
+
+        action = cachedResource.actionRequired;
+        if (action == null) return;
+
+        float damage = GetToolDamage();
+
+        UpdateProgressBar(cachedResource);
+
+        if (damage <= 0f)
+            return;
+
+
+        // Start attack
+        nextAllowedHitTime = Time.time + holdHitInterval;
+        animator.SetTrigger("Hit");
+    }
+
+
+    private void HandleProximityUI()
+    {
+        Collider nearest = FindNearestTarget();
+
+        // No resource nearby -> hide current bar
+        if (nearest == null)
         {
-            if (!holdingKey) return;  // must press C to start ANY action
-
-            target = FindNearestTarget();//find nearest target in range
-            if (target == null) return;
-
-            var resource = target.GetComponent<Resource>();//get resource data
-            if (resource == null) return;
-
-            action = resource.actionRequired;//what action is required(chop, mine, etc)
-            if (action == null) return;
-
-            // get progress bar from object
-            var bars = target.GetComponentsInChildren<ProgressBar>(true);
-            progressBar = bars.Length > 0 ? bars[0] : null;
-            if (progressBar == null) return;
-
-            //show the progress bar and reset to 0
-            progressBar.Show();
-            progressBar.SetProgress(0f, true);
-
-            //reset timer
-            timer = 0f;
-
-            //mark that the player is now performing the action
-            isWorking = true;
+            HideHoveredBar();
             return;
         }
 
-        // 2. WORKING -> performing action 
-        if (isWorking)
+        Resource resource = nearest.GetComponent<Resource>();
+        if (resource == null || resource.actionRequired == null)
         {
-            // stop if key released
-            if (!holdingKey)
-            {
-                Debug.Log($"{action.actionName} cancelled - released key too soon.");
-                ResetAction();
-                return;
-            }
-
-            // cancel if player leaves interaction radius
-            if (target == null || Vector3.Distance(transform.position, target.transform.position) > interactionRadius)
-            {
-                Debug.Log($"{action.actionName} cancelled - moved too far from target.");
-                ResetAction();
-                return;
-            }
-
-
-            bool hasTool = HasRequiredTool();//check if the player has correct tool
-            float requiredTime = GetCurrentHoldTime();//how long should the action take with current tool
-
-            // increase timer
-            timer += Time.deltaTime;
-
-            // update bar
-            float p = timer / requiredTime;
-            progressBar.SetProgress(p, hasTool);
-
-            // wrong tool -> bar stays red & full but won't complete
-            if (!hasTool)
-            {
-                if (progressBar != null)
-                    progressBar.SetProgress(1f, false);
-                return;
-            }
-
-            // correct tool & full -> perform action
-            if (timer >= requiredTime)
-            {
-                PerformAction(target);//spawn drops, disable object
-                ResetAction();//hide Ui and clear variables
-            }
+            HideHoveredBar();
+            return;
         }
+
+        // Same resource -> just update color
+        if (hoveredResource == resource)
+        {
+            UpdateProgressBar(resource);
+            return;
+        }
+
+        // New resource -> switch bar
+        HideHoveredBar();
+
+        hoveredResource = resource;
+
+        var bars = resource.GetComponentsInChildren<ProgressBar>(true);
+        hoveredBar = bars.Length > 0 ? bars[0] : null;
+
+        if (hoveredBar == null) return;
+
+        progressBar = hoveredBar;
+
+        hoveredBar.Show();
+        UpdateProgressBar(resource);
     }
 
-
-    //ckeck if the currently tool is valid for the active action
-    private bool HasRequiredTool()
+    private void HideHoveredBar()
     {
-        if (action == null || action.toolRequirements == null) return false;
+        if (hoveredBar != null)
+            hoveredBar.Hide();
 
-        WeaponType currentTool = weaponSwitcher.CurrentWeaponType;
-
-        //loop through allowed tools defined in the action
-        foreach (var req in action.toolRequirements)
-        {
-            if (req.tool == currentTool) return true;
-        }
-
-        return false;
-    }
-
-
-
-    //reset all state: stop action, hide UI, clear target and action
-    private void ResetAction()
-    {
-        isWorking = false;
-        timer = 0f;
-
-        if (progressBar != null)
-        {
-            progressBar.Hide();
-            progressBar.SetProgress(0f, false);
-        }
-
-        progressBar = null;
-        target = null;
-        action = null;
+        hoveredBar = null;
+        hoveredResource = null;
     }
 
     //find the nearest interactable resourcce inside the radius
@@ -206,22 +182,92 @@ public class PlayerAction : MonoBehaviour
         StartCoroutine(Respawn(target.gameObject, action.respawnTime));
     }
 
-    private float GetCurrentHoldTime()
+    private float GetToolDamage()
     {
-        if (action == null || action.toolRequirements == null)
-            return 0f;
-
         WeaponType currentTool = weaponSwitcher.CurrentWeaponType;
 
-        foreach (var req in action.toolRequirements)//find matching tool requirement
+        foreach (var req in action.toolRequirements)
         {
             if (req.tool == currentTool)
-                return req.holdTime;
+                return req.damage;
         }
 
-        return float.MaxValue; // cannot complete if tool not allowed
+        return 0f; // wrong tool
     }
 
+    public void ApplyDamage()
+    {
+        if (cachedResource == null) return;
+
+        // Player moved too far away before hit
+        if (Vector3.Distance(transform.position, cachedResource.transform.position) > interactionRadius)
+            return;
+
+        float damage = GetToolDamage();
+        if (damage <= 0f) return;
+
+        cachedResource.currentHealth -= damage;
+        cachedResource.currentHealth = Mathf.Max(0f, cachedResource.currentHealth);
+
+        UpdateProgressBar(cachedResource);
+
+        var chicken = cachedResource.GetComponent<ChickenWander>();
+        if (chicken != null)
+        {
+            chicken.FleeFrom(transform.position);
+        }
+
+
+        if (cachedResource.currentHealth <= 0f)
+        {
+            PerformAction(cachedTarget);
+            ClearCachedTarget();
+        }
+    }
+
+    private void UpdateProgressBar(Resource resource)
+    {
+        if (resource == null || resource.actionRequired == null) return;
+
+        // Get bar once
+        if (progressBar == null)
+        {
+            var bars = resource.GetComponentsInChildren<ProgressBar>(true);
+            if (bars.Length == 0) return;
+            progressBar = bars[0];
+        }
+
+        progressBar.Show();
+
+        float progress = resource.currentHealth / resource.actionRequired.maxHealth;
+
+        // Tool only affects color, NOT visibility
+        bool hasCorrectTool = HasCorrectTool(resource.actionRequired);
+
+        progressBar.SetProgress(progress, hasCorrectTool);
+    }
+
+    private bool HasCorrectTool(InteractableAction action)
+    {
+        WeaponType currentTool = weaponSwitcher.CurrentWeaponType;
+
+        foreach (var req in action.toolRequirements)
+        {
+            if (req.tool == currentTool)
+                return true;
+        }
+
+        return false;
+    }
+
+
+
+    private void ClearCachedTarget()
+    {
+        cachedTarget = null;
+        cachedResource = null;
+        action = null;
+    }
 
 
     // Respawn the resource object after delay
@@ -229,8 +275,14 @@ public class PlayerAction : MonoBehaviour
     {
         obj.SetActive(false);
         yield return new WaitForSeconds(delay);
+
+        Resource res = obj.GetComponent<Resource>();
+        if (res != null)
+            res.ResetHealth();
+
         obj.SetActive(true);
     }
+
 
     // finds an empty position nearby so drops don’t overlap with objects
     private Vector3 FindFreeDropPosition(Vector3 center, float radius, float checkRadius, int maxAttempts = 20)

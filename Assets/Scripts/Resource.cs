@@ -16,7 +16,8 @@ public class Resource : MonoBehaviour
         Coal,
         Wheat,
         Grass,
-        Flower
+        Flower,
+        Chicken
     }
 
     // object type 
@@ -31,4 +32,18 @@ public class Resource : MonoBehaviour
     */
     [Header("Action Required")]
     public InteractableAction actionRequired;
+
+    [HideInInspector]
+    public float currentHealth;
+
+    private void Awake()
+    {
+        if (actionRequired != null)
+            currentHealth = actionRequired.maxHealth;
+    }
+
+    public void ResetHealth()
+    {
+        currentHealth = actionRequired.maxHealth;
+    }
 }

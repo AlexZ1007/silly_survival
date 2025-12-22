@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb747cbd401ee594194aee772b6d484f, type: 3}
-  m_Name: Wood
+  m_Name: Chicken
   m_EditorClassIdentifier: 
-  actionName: Chop Wood
+  actionName: Kill chicken
   toolRequirements:
+  - tool: 10
+    damage: 20
+  - tool: 11
+    damage: 50
   - tool: 1
-    damage: 10
-  - tool: 2
-    damage: 5
-  - tool: 3
-    damage: 2
+    damage: 30
   maxHealth: 100
   respawnTime: 150
   drops:
-  - {fileID: 2299900259112861600, guid: 3c9fb982bf9d8ed45823e3ec0ac35c0a, type: 3}
+  - {fileID: 5527832005503377488, guid: d83240061f63df04f9e54adfcb2403fe, type: 3}
+  - {fileID: 7066252712696898767, guid: 9f68af11544c7384291e1e8843512f2c, type: 3}
+  - {fileID: 7061572032740222462, guid: b6000b11775b4b5428a9fd3669d58032, type: 3}
