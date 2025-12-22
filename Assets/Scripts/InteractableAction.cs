@@ -8,10 +8,12 @@ public class InteractableAction : ScriptableObject
     public struct ToolRequirement
     {
         public WeaponType tool;
-        public float holdTime;//how long to hold the action key
+        public float damage;//damage per press
     }
 
     public ToolRequirement[] toolRequirements; // Assign in inspector
+
+    public float maxHealth = 100f;
     public float respawnTime = 150f;// how long until the object respawns
     public GameObject[] drops;
    
