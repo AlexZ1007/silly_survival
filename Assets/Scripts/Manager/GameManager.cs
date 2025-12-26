@@ -4,17 +4,34 @@ using UnityEngine.SocialPlatforms;
 
 public class GameManager : MonoBehaviour
 {
+    public static bool applySaveOnStart = true;
+    private static bool saveApplied = false;
+
     public PlayerController player;
     public CameraController platerCamera;
+    public LevelManager levelManager;
+
 
     [Header("UI")]
     public GameObject pauseMenuPanel;
 
     private bool isPaused = false;
 
+
+    // Keep this object across scenes
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
-        LoadGame();
+        if (applySaveOnStart && !saveApplied)
+        {
+            LoadGame();
+            saveApplied = true;
+        }
+
 
         // Make sure pause menu starts hidden
         if (pauseMenuPanel != null)
@@ -61,8 +78,12 @@ public class GameManager : MonoBehaviour
     public void SaveGame()
     {
         SaveData data = new SaveData();
-        player.SaveTo(data);
-        platerCamera.SaveTo(data);
+        if(player!= null)
+            player.SaveTo(data);
+        if(platerCamera != null)
+            platerCamera.SaveTo(data);
+        if(levelManager != null)
+            levelManager.SaveTo(data);
         SaveSystem.Save(data);
     }
 

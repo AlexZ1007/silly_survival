@@ -4,6 +4,9 @@ using System.Collections.Generic;
 public class SaveData
 {
     public float[] playerPosition;
+
+    public int currentLevelID;
+
     public List<ItemEntry> items;
     public float[] cameraPosition;
     public float[] cameraRotation;

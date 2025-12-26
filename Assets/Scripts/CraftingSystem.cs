@@ -3,6 +3,7 @@ using UnityEngine;
 public class CraftingSystem : MonoBehaviour
 {
     public PlayerInventory playerInventory;
+    public LevelManager levelManager;
 
     public bool TryCraft(RecipeScriptable recipe)
     {
@@ -26,6 +27,12 @@ public class CraftingSystem : MonoBehaviour
 
         // 3. Give result item
         playerInventory.AddItem(recipe.resultItem, 1);
+
+        // 4. Notify level manager
+        if (levelManager != null)
+        {
+            levelManager.OnItemCrafted(recipe.resultItem);
+        }
 
         Debug.Log("Crafted: " + recipe.resultItem.name);
         return true;
