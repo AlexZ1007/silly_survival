@@ -23,10 +23,12 @@ public class CraftButton : MonoBehaviour
         if (success)
         {
             Debug.Log("Crafting succeeded!");
+            SoundManager.Instance.PlaySFX("success_craft");
         }
         else
         {
             Debug.Log("Crafting failed!");
+            SoundManager.Instance.PlaySFX("fail_craft");
         }
     }
 }

@@ -28,6 +28,8 @@ public class LoadGameState : MonoBehaviour
         {
             gameState.currentLevel = levelDatabase.GetByLevelId(1); // Fallback to level ID 1
         }
+
+        SoundManager.Instance.PlayMusic("background");
     }
 
 }
