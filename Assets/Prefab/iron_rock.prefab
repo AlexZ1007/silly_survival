@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.11, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.72, y: 2.72, z: 2.72}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9047081079567635800}
   m_Father: {fileID: 6075949511902109148}
@@ -837,6 +837,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: iron_rock
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bfed1afa7a419b647a4cee8bbaa252e9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: bfed1afa7a419b647a4cee8bbaa252e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -962,6 +966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceType: 2
   actionRequired: {fileID: 11400000, guid: 5fbed2580f89aa04db3102abd213f4d0, type: 2}
+  currentHealth: 0
 --- !u!114 &-7079551090025346009
 MonoBehaviour:
   m_ObjectHideFlags: 0
