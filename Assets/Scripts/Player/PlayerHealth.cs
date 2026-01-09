@@ -77,7 +77,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // Call when health reaches 0
+
     void OnDeath()
     {
         Debug.Log("Player died (health reached 0) - respawn to safe space");
