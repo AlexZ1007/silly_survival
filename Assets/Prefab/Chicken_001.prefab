@@ -1013,8 +1013,8 @@ GameObject:
   - component: {fileID: 8065869107593859722}
   - component: {fileID: 2342896495097956997}
   - component: {fileID: 7342683001874257149}
-  - component: {fileID: 4945572636227917935}
   - component: {fileID: 3392446457301729292}
+  - component: {fileID: 1295077550092298084}
   m_Layer: 0
   m_Name: Chicken_001
   m_TagString: Untagged
@@ -1031,7 +1031,7 @@ Transform:
   m_GameObject: {fileID: 5026499934377095609}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.993237, y: 4.189913, z: -1.8805475}
+  m_LocalPosition: {x: -14.04, y: 4.42, z: 2.5}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1085,7 +1085,7 @@ MonoBehaviour:
   groundCollider: {fileID: 0}
   obstacleLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   avoidDistance: 2
   avoidTurnAngle: 90
 --- !u!114 &7342683001874257149
@@ -1103,28 +1103,6 @@ MonoBehaviour:
   resourceType: 12
   actionRequired: {fileID: 11400000, guid: da8e9f6cab4e1714ebec011295f50dfe, type: 2}
   currentHealth: 0
---- !u!64 &4945572636227917935
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5026499934377095609}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2014698503841005554, guid: 605d0caffe3b2fe489bc37e772cb7496, type: 3}
 --- !u!54 &3392446457301729292
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1147,11 +1125,34 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Interpolate: 1
+  m_Constraints: 84
+  m_CollisionDetection: 1
+--- !u!136 &1295077550092298084
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026499934377095609}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.22
+  m_Height: 0.46
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.22, z: -0.04}
 --- !u!1 &5579123610924448965
 GameObject:
   m_ObjectHideFlags: 0

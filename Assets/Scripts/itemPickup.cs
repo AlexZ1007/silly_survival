@@ -13,7 +13,7 @@ public class ItemPickup : MonoBehaviour
             if (inventory != null)
             {
                 inventory.AddItem(itemData, 1);
-               // SoundManager.Instance.PlaySFX("item_pickup");
+                SoundManager.Instance.PlaySFX("item_pickup");
                 Debug.Log($"<color=green>PICKED UP: {itemData.itemName} x 1</color>");
                 Destroy(gameObject);
             }
