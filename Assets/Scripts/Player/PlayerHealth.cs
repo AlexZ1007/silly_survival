@@ -20,6 +20,11 @@ public class PlayerHealth : MonoBehaviour
     [Tooltip("Assign the Slider from the Canvas (optional, can be null)")]
     public Slider healthSlider; // drag HealthSlider here
 
+    [Header("Respawn")]
+    [Tooltip("Safe respawn position in world coordinates")]
+    public Transform respawnPoint;
+
+
     // current health (private but visible in inspector if you need)
     [HideInInspector]
     public int currentHealth;
@@ -80,14 +85,45 @@ public class PlayerHealth : MonoBehaviour
 
     void OnDeath()
     {
-        Debug.Log("Player died (health reached 0) - respawn to safe space");
-        // Put death logic here (respawn, game over screen, etc.)
+        Debug.Log("Player died - respawning at safe space");
+
+        // Move player to safe position
+        transform.position = respawnPoint.position;
+
+        // Restore full health
+        currentHealth = maxHealth;
+
+        // Reset timer so health doesn't instantly decrease again
+        timer = 0f;
+
+        // Update UI
+        if (healthSlider != null)
+            healthSlider.value = currentHealth;
     }
+
 
     // Public helper: immediate damage or heal
     public void ModifyHealth(int delta)
     {
         currentHealth = Mathf.Clamp(currentHealth + delta, 0, maxHealth);
-        if (healthSlider != null) healthSlider.value = currentHealth;
+
+        if (healthSlider != null)
+            healthSlider.value = currentHealth;
+
+        if (currentHealth <= 0)
+        {
+            OnDeath();
+        }
     }
+
+
+    void OnDrawGizmos()
+    {
+        if (respawnPoint == null) return;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(respawnPoint.position, 0.4f);
+    }
+
+
 }
