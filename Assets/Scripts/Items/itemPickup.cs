@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -13,7 +13,9 @@ public class ItemPickup : MonoBehaviour
             if (inventory != null)
             {
                 inventory.AddItem(itemData, 1);
-                SoundManager.Instance.PlaySFX("item_pickup");
+
+                if(SoundManager.Instance != null)
+                    SoundManager.Instance.PlaySFX("item_pickup");
                 Debug.Log($"<color=green>PICKED UP: {itemData.itemName} x 1</color>");
                 Destroy(gameObject);
             }

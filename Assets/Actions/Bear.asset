@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb747cbd401ee594194aee772b6d484f, type: 3}
+  m_Name: Bear
+  m_EditorClassIdentifier: 
+  actionName: Kill bear
+  toolRequirements:
+  - tool: 10
+    damage: 20
+  - tool: 11
+    damage: 50
+  - tool: 1
+    damage: 30
+  maxHealth: 200
+  respawnTime: 150
+  drops:
+  - {fileID: 1585016327250938515, guid: 11ddd7e7f12033b4f9f0f5f99b3446e9, type: 3}
+  - {fileID: 1585016327250938515, guid: 11ddd7e7f12033b4f9f0f5f99b3446e9, type: 3}
+  - {fileID: 1516660456261275691, guid: 5bcb09e3dc7b0bd4cb1d86906c1d481c, type: 3}

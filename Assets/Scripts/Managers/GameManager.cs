@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
     // Resume game from pause
     public void ResumeGame()
     {
+        Debug.Log("Resuming game...");
         isPaused = false;
         Time.timeScale = 1f;
 

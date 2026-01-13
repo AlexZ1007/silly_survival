@@ -11,7 +11,6 @@ public class InventoryUI : MonoBehaviour
 
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private Transform slotParent;
-    [SerializeField] private int numberOfSlots = 20;
 
     [Header("UI Panel (to hide/show)")]
     [SerializeField] private GameObject inventoryPanel;   // ← only this will be enabled/disabled
@@ -38,7 +37,7 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        CreateSlots(numberOfSlots);
+        CreateSlots(inventory.numberOfSlots);
 
         inventory.OnInventoryChanged += UpdateUI;
         UpdateUI();

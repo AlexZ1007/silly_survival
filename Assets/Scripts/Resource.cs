@@ -17,7 +17,8 @@ public class Resource : MonoBehaviour
         Wheat,
         Grass,
         Flower,
-        Chicken
+        Chicken,
+        Bear
     }
 
     // object type 

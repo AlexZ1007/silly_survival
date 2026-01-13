@@ -60,6 +60,7 @@ public class WeaponSwitcher : MonoBehaviour
             var toolItem = toolObj.GetComponent<ToolItemHolder>();
             if (toolItem == null) continue;
 
+
             if (playerInventory.GetAmount(toolItem.item) > 0)
             {
                 ownedTools.Add(toolObj);

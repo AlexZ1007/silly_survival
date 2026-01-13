@@ -19,16 +19,24 @@ public class CraftingSystem : MonoBehaviour
             }
         }
 
-        // 2. Remove ingredients
+
+        // 2. Give result item
+        if(playerInventory.TryAddItem(recipe.resultItem, 1) == false)
+        {
+            Debug.Log("Inventory full, cannot craft: " + recipe.resultItem.name);
+            // Optionally, you could return the ingredients back to the inventory here
+            return false;
+        }
+
+
+        // 3. Remove ingredients
         foreach (var entry in recipe.ingredients)
         {
             playerInventory.RemoveItem(entry.item, entry.amount);
         }
 
-        // 3. Give result item
-        playerInventory.AddItem(recipe.resultItem, 1);
 
-        // 4. Notify level manager
+        // 4. Check level manager if the level is finished
         if (levelManager != null)
         {
             levelManager.OnItemCrafted(recipe.resultItem);
