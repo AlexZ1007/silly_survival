@@ -24,6 +24,12 @@ EditorBuildSettings:
     path: Assets/Scenes/TestLevel2.unity
     guid: 369bdc72073bc814fabdebe18b2d45ae
   - enabled: 1
+    path: Assets/Scenes/Level1 - Spring.unity
+    guid: 2494e3d46d7dc794cb3757623c2ca473
+  - enabled: 1
+    path: Assets/Scenes/Level2 - Summer.unity
+    guid: ed81bd3f477f89d46bfee7c0e97d3cee
+  - enabled: 1
     path: Assets/Scenes/EndScene.unity
     guid: c7babba3254a73441a3c6475a559ffc6
   m_configObjects:
