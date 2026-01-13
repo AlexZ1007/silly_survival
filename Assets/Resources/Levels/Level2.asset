@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level2
   m_EditorClassIdentifier: 
   levelID: 2
-  sceneName: TestLevel2
+  sceneName: Level2 - Summer
   requiredItem: {fileID: 11400000, guid: f10b8f19f0e264946a9aca500318edf1, type: 2}
   nextLevel: {fileID: 0}

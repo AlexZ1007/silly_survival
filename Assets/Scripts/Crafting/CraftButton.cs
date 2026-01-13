@@ -19,16 +19,20 @@ public class CraftButton : MonoBehaviour
 
     public void OnCraftPressed()
     {
+        Debug.Log("Craft button pressed for recipe: " + (recipe != null ? recipe.name : "null"));
+
         bool success = craftingSystem.TryCraft(recipe);
         if (success)
         {
             Debug.Log("Crafting succeeded!");
-            SoundManager.Instance.PlaySFX("success_craft");
+            if(SoundManager.Instance != null)
+                SoundManager.Instance.PlaySFX("success_craft");
         }
         else
         {
             Debug.Log("Crafting failed!");
-            SoundManager.Instance.PlaySFX("fail_craft");
+            if(SoundManager.Instance != null)
+                SoundManager.Instance.PlaySFX("fail_craft");
         }
     }
 }
