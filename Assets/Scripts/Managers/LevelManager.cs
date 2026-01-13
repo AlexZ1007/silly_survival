@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework.Interfaces;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,11 +11,23 @@ public class LevelManager : MonoBehaviour
     [Header("Scenes")]
     public string nextLevelMenuScene = "NextLevelMenu";
     public string endGameScene = "EndScene";
+
+    [Header("Dispaly")]
+    public TMP_Text questText;
     private void Awake()
     {
         // Register this level as current
         if (gameState != null)
             gameState.currentLevel = levelData;
+
+        if (questText != null && levelData != null && levelData.requiredItem != null)
+        {
+            questText.text = $"Quest: Craft {levelData.requiredItem.itemName}";
+        }
+        else
+        {
+            Debug.LogWarning("QuestUI: Missing references for quest text.");
+        }
 
         Debug.Log("Loaded level: " + levelData.sceneName);
     }
