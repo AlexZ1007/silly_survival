@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6890020983769933286}
   - component: {fileID: 1671943617572113831}
   - component: {fileID: 883073782783671702}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 803494136008163104}
   - component: {fileID: 8336146093678684002}
   - component: {fileID: 7693323162298809869}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ProgressUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 5279874072081369222}
   - component: {fileID: 4615776594215293714}
   - component: {fileID: 174374734759352470}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 4619803968952805671}
   - component: {fileID: 5064347675217832614}
   - component: {fileID: 5687093738147840884}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 8792204793308136061}
   - component: {fileID: 3424218653764310275}
   - component: {fileID: 8196954523321190234}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 3981117453731434901}
   - component: {fileID: 4322230914907913366}
   - component: {fileID: 4112676762071387831}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,6 +615,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: e2d826462c94d6e40a1f35019c74ad10, type: 3}
       propertyPath: m_Name
       value: bush_with_fruits
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e2d826462c94d6e40a1f35019c74ad10, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e2d826462c94d6e40a1f35019c74ad10, type: 3}
       propertyPath: m_LocalPosition.x
@@ -760,9 +764,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 803494136008163104}
     m_Modifications:
+    - target: {fileID: 480006928096330123, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1039509225217476076, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039509225217476076, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036452911514663947, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6599858888863306021, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
       propertyPath: m_Pivot.x

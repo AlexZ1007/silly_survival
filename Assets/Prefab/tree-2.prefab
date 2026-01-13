@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7154851205019585388}
   - component: {fileID: 2937404919817915473}
   - component: {fileID: 5697798410211137591}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ProgressUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,6 +75,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: d9fc2e3a51bf2314fb77fd6e4d0a851b, type: 3}
       propertyPath: m_Name
       value: tree-2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: d9fc2e3a51bf2314fb77fd6e4d0a851b, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: d9fc2e3a51bf2314fb77fd6e4d0a851b, type: 3}
       propertyPath: m_TagString
@@ -198,6 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceType: 3
   actionRequired: {fileID: 11400000, guid: 3ec0a9678851c51499d2a6077d63f18e, type: 2}
+  currentHealth: 0
 --- !u!114 &7939420944799775108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,9 +229,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7154851205019585388}
     m_Modifications:
+    - target: {fileID: 480006928096330123, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1039509225217476076, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039509225217476076, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036452911514663947, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6599858888863306021, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
       propertyPath: m_Pivot.x

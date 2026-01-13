@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb747cbd401ee594194aee772b6d484f, type: 3}
+  m_Name: Trunk
+  m_EditorClassIdentifier: 
+  actionName: Chop Wood
+  toolRequirements:
+  - tool: 1
+    damage: 10
+  - tool: 2
+    damage: 5
+  - tool: 3
+    damage: 2
+  maxHealth: 100
+  respawnTime: 150
+  drops:
+  - {fileID: 2299900259112861600, guid: 3c9fb982bf9d8ed45823e3ec0ac35c0a, type: 3}
+  - {fileID: 2299900259112861600, guid: 3c9fb982bf9d8ed45823e3ec0ac35c0a, type: 3}

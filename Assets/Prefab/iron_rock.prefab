@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5945645868545294495}
   - component: {fileID: 7621128430158041532}
   - component: {fileID: 4695823709939024962}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ProgressUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 538035041807427847}
   - component: {fileID: 2357182801752436995}
   - component: {fileID: 5563894361850828801}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 7151108807541893330}
   - component: {fileID: 5334090490854051294}
   - component: {fileID: 5091814638480131920}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 4186537074997257130}
   - component: {fileID: 2940757807213631768}
   - component: {fileID: 7172423469912491341}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 7664345432562685626}
   - component: {fileID: 4054485006867164013}
   - component: {fileID: 6225340184572799258}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 8164618260437902876}
   - component: {fileID: 7628022579818514091}
   - component: {fileID: 1521670619902933668}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,7 +616,7 @@ GameObject:
   - component: {fileID: 7030129435000041719}
   - component: {fileID: 7116286896183877139}
   - component: {fileID: 1690127985792742947}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -720,9 +720,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5945645868545294495}
     m_Modifications:
+    - target: {fileID: 480006928096330123, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1039509225217476076, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039509225217476076, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036452911514663947, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6599858888863306021, guid: e1bcff8a2dc65ba46a8ef66b7f972782, type: 3}
       propertyPath: m_Pivot.x
@@ -836,6 +848,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: bfed1afa7a419b647a4cee8bbaa252e9, type: 3}
       propertyPath: m_Name
       value: iron_rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bfed1afa7a419b647a4cee8bbaa252e9, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: bfed1afa7a419b647a4cee8bbaa252e9, type: 3}
       propertyPath: m_IsActive
