@@ -604,7 +604,6 @@ GameObject:
   - component: {fileID: 3274386415982671744}
   - component: {fileID: 8903855934774652410}
   - component: {fileID: 4035930773334582905}
-  - component: {fileID: 1196134571992452042}
   - component: {fileID: 6017919145334518093}
   - component: {fileID: 5501970068386827322}
   - component: {fileID: 3441909686730553331}
@@ -670,34 +669,6 @@ MonoBehaviour:
   resourceType: 13
   actionRequired: {fileID: 11400000, guid: ca9ff63fffbfea249a64fdedffe36172, type: 2}
   currentHealth: 0
---- !u!114 &1196134571992452042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2754837053512527162}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9318e8e61732ae94ba891c6c79607bc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 8
-  walkSpeed: 2
-  rotationSpeed: 120
-  waitTime: 3
-  player: {fileID: 0}
-  chaseRadius: 10
-  runSpeed: 4.5
-  attackRadius: 6
-  attackDamage: 10
-  attackCooldown: 1.5
-  groundCheckDistance: 6
-  groundCollider: {fileID: 0}
-  obstacleLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  avoidDistance: 3
 --- !u!136 &6017919145334518093
 CapsuleCollider:
   m_ObjectHideFlags: 0

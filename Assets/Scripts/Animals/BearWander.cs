@@ -19,6 +19,7 @@ public class BearWander : MonoBehaviour
     public float attackRadius = 2f;
     public int attackDamage = 20;
     public float attackCooldown = 1.5f;
+    public float knockbackStrength = 2f; // optional small push
 
     [Header("Ground")]
     public float groundCheckDistance = 5f;
@@ -26,7 +27,7 @@ public class BearWander : MonoBehaviour
 
     [Header("Obstacle Avoidance")]
     public LayerMask obstacleLayers;
-    public float avoidDistance = 3f;
+    public float obstacleCheckDistance = 1.5f;
 
     private Rigidbody rb;
     private Animator anim;
@@ -34,6 +35,7 @@ public class BearWander : MonoBehaviour
 
     private Vector3 startPosition;
     private Vector3 targetPosition;
+    private Vector3 lastPosition;
 
     private float waitTimer;
     private float attackTimer;
@@ -46,6 +48,7 @@ public class BearWander : MonoBehaviour
         anim = GetComponent<Animator>();
 
         startPosition = transform.position;
+        lastPosition = transform.position;
 
         rb.useGravity = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
@@ -64,14 +67,21 @@ public class BearWander : MonoBehaviour
     {
         attackTimer -= Time.deltaTime;
 
+        if (player == null) return;
+
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        if (distanceToPlayer <= attackRadius)
+        bool isInAttackRange = distanceToPlayer <= attackRadius;
+        bool isInChaseRange = distanceToPlayer <= chaseRadius;
+
+        if (isInAttackRange)
         {
-            isChasing = false;
+            // Face player and attack
             TryAttack();
+            isChasing = true; // keep facing player
+            targetPosition = player.position; // always face player
         }
-        else if (distanceToPlayer <= chaseRadius)
+        else if (isInChaseRange)
         {
             isChasing = true;
             targetPosition = player.position;
@@ -91,8 +101,14 @@ public class BearWander : MonoBehaviour
             }
         }
 
+        // Animation driven by actual movement
+        float actualSpeed =
+            (transform.position - lastPosition).magnitude / Mathf.Max(Time.deltaTime, 0.0001f);
+
+        anim.SetFloat("Speed", actualSpeed, 0.15f, Time.deltaTime);
         anim.SetBool("IsRunning", isChasing);
-        anim.SetFloat("Speed", rb.linearVelocity.magnitude, 0.15f, Time.deltaTime);
+
+        lastPosition = transform.position;
     }
 
     void FixedUpdate()
@@ -100,64 +116,67 @@ public class BearWander : MonoBehaviour
         Vector3 toTarget = targetPosition - rb.position;
         toTarget.y = 0f;
 
-        if (toTarget.magnitude < 0.05f)
-            return;
+        if (toTarget.sqrMagnitude < 0.01f) return;
 
-        Vector3 desiredDir = toTarget.normalized;
-
+        Vector3 moveDir = SmoothAvoidance(toTarget.normalized);
         float speed = isChasing ? runSpeed : walkSpeed;
         float moveStep = speed * Time.fixedDeltaTime;
 
-        // Obstacle check
-        Vector3 origin = rb.position + Vector3.up * 0.6f;
-        if (Physics.SphereCast(origin, 0.5f, transform.forward, out _, moveStep + 0.4f, obstacleLayers))
+        // If attacking, rotate toward player but do NOT move forward
+        if (attackTimer > 0f && Vector3.Distance(transform.position, player.position) <= attackRadius)
         {
-            AvoidObstacle();
-            return;
+            Vector3 dirToPlayer = (player.position - rb.position).normalized;
+            dirToPlayer.y = 0f;
+            if (dirToPlayer.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(dirToPlayer);
+                rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, targetRot, rotationSpeed * Time.fixedDeltaTime));
+            }
+            return; // stop forward movement
         }
 
-        // Smooth heavy rotation
-        Quaternion targetRot = Quaternion.LookRotation(desiredDir);
-        Quaternion newRot = Quaternion.RotateTowards(
-            rb.rotation,
-            targetRot,
-            rotationSpeed * Time.fixedDeltaTime
-        );
-        rb.MoveRotation(newRot);
+        // Normal movement
+        if (moveDir.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(moveDir);
+            rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, targetRot, rotationSpeed * Time.fixedDeltaTime));
+        }
 
-        // Move forward ONLY
         rb.MovePosition(rb.position + transform.forward * moveStep);
     }
 
     void TryAttack()
     {
-        if (attackTimer > 0f)
-            return;
+        if (attackTimer > 0f || playerHealth == null) return;
 
         anim.SetTrigger("Attack");
 
-        if (playerHealth != null)
-            playerHealth.ModifyHealth(-attackDamage);
+        // Apply damage
+        playerHealth.ModifyHealth(-attackDamage);
+
+        // Optional knockback using velocity (safe, keeps player grounded)
+        Rigidbody playerRb = player.GetComponent<Rigidbody>();
+        if (playerRb != null)
+        {
+            Vector3 knockbackDir = (player.position - transform.position).normalized;
+            knockbackDir.y = 0f;
+            playerRb.linearVelocity = knockbackDir * knockbackStrength;
+        }
 
         attackTimer = attackCooldown;
     }
 
-    void AvoidObstacle()
+    Vector3 SmoothAvoidance(Vector3 forwardDir)
     {
-        for (int i = 0; i < 6; i++)
+        Vector3 origin = rb.position + Vector3.up * 0.6f;
+        if (Physics.SphereCast(origin, 0.5f, forwardDir, out RaycastHit hit, obstacleCheckDistance, obstacleLayers))
         {
-            float angle = Random.Range(-120f, 120f);
-            Vector3 dir = Quaternion.Euler(0f, angle, 0f) * transform.forward;
-
-            if (!Physics.SphereCast(rb.position + Vector3.up * 0.6f, 0.5f, dir, out _, 1.2f, obstacleLayers))
-            {
-                Vector3 newTarget = rb.position + dir * avoidDistance;
-                SetTargetOnGround(newTarget);
-                return;
-            }
+            Vector3 slideDir = Vector3.Cross(Vector3.up, hit.normal).normalized;
+            if (Vector3.Angle(forwardDir, slideDir) > 90f)
+                slideDir = -slideDir;
+            return slideDir;
         }
-
-        ChooseNewTarget();
+        return forwardDir;
     }
 
     void ChooseNewTarget()
@@ -166,13 +185,10 @@ public class BearWander : MonoBehaviour
         {
             Vector2 circle = Random.insideUnitCircle * radius;
             Vector3 flatTarget = startPosition + new Vector3(circle.x, 0f, circle.y);
-
             SetTargetOnGround(flatTarget);
-
             if (!Physics.CheckSphere(targetPosition, 0.6f, obstacleLayers))
                 return;
         }
-
         targetPosition = transform.position;
     }
 
@@ -192,7 +208,6 @@ public class BearWander : MonoBehaviour
         }
     }
 
-    // Scene view debugging
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
