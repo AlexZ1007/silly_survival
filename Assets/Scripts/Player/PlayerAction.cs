@@ -205,7 +205,9 @@ public class PlayerAction : MonoBehaviour
 
         float damage = GetToolDamage();
         if (damage <= 0f) return;
-        SoundManager.Instance.PlaySFX("chop");
+
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlaySFX("chop");
 
         cachedResource.currentHealth -= damage;
         cachedResource.currentHealth = Mathf.Max(0f, cachedResource.currentHealth);

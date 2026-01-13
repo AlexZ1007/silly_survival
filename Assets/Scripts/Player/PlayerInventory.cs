@@ -6,8 +6,20 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     private Dictionary<ItemScriptableObject, int> items = new Dictionary<ItemScriptableObject, int>();
+    [SerializeField] public int numberOfSlots = 20;
 
     public event Action OnInventoryChanged;
+
+    public bool TryAddItem(ItemScriptableObject item, int amount = 1)
+    {
+        if (IsFull() && !items.ContainsKey(item))
+        {
+            Debug.LogWarning("Inventory is full! Cannot add new item.");
+            return false;
+        }
+        AddItem(item, amount);
+        return true;
+    }
 
     public void AddItem(ItemScriptableObject item, int amount = 1)
     {
@@ -115,7 +127,12 @@ public class PlayerInventory : MonoBehaviour
                 Debug.LogWarning($"Item not found: {entry.itemName}");
             }
         }
+
+        OnInventoryChanged?.Invoke();
     }
+
+    public bool IsFull() => items.Count >= numberOfSlots;
+
 
 }
 
