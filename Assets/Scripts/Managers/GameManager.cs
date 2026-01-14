@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
 
     public void MainMenu()
     {
+        SaveGame();
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }

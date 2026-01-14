@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03be7ab2e0657ab429e5d6a71601d2d7, type: 3}
   m_Name: Level3
   m_EditorClassIdentifier: 
-  levelID: 2
-  sceneName: Level2 - Summer
+  levelID: 3
+  sceneName: Level3 - Autumn
   requiredItem: {fileID: 11400000, guid: a604f342509908b408cb80a4a54cbf5f, type: 2}
   nextLevel: {fileID: 11400000, guid: 32083e2516c6b7443a72ba1d33b3cf3b, type: 2}

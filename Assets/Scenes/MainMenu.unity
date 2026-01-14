@@ -582,7 +582,7 @@ MonoBehaviour:
     loop: 1
   sfxSounds:
   - name: chop
-    clip: {fileID: 8300000, guid: 90fc98dd8c80c39449796c1b15d19c56, type: 3}
+    clip: {fileID: 8300000, guid: cbb9d95a57bfd8e48b06ea28081efb72, type: 3}
     volume: 0.3
     pitch: 1
     loop: 0

@@ -6,35 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Scenes/updateSave.unity
-    guid: 612c2dc3d73bfe44eb46deb540421bf7
-  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 400167b069654894d868479754c043a3
   - enabled: 1
     path: Assets/Scenes/NextLevelMenu.unity
     guid: 93efc3a719e596941975eb4a6da82e89
   - enabled: 1
-    path: Assets/Scenes/TestLevel1.unity
-    guid: 8bdc412f8776c3c42843e3d948c2dcae
-  - enabled: 1
-    path: Assets/Scenes/TestLevel2.unity
-    guid: 369bdc72073bc814fabdebe18b2d45ae
-  - enabled: 1
     path: Assets/Scenes/Level1 - Spring.unity
     guid: 2494e3d46d7dc794cb3757623c2ca473
+  - enabled: 1
+    path: Assets/Scenes/Level2 - Summer.unity
+    guid: ed81bd3f477f89d46bfee7c0e97d3cee
   - enabled: 1
     path: Assets/Scenes/Level3 - Autumn.unity
     guid: 98778e6ff688f53469731be87d0c990e
   - enabled: 1
-    path: Assets/Scenes/Level4- Winter.unity
+    path: Assets/Scenes/Level4 - Winter.unity
     guid: ff32c997ea01d2647ac22824517b68e2
-  - enabled: 1
-    path: Assets/Scenes/Level2 - Summer.unity
-    guid: ed81bd3f477f89d46bfee7c0e97d3cee
   - enabled: 1
     path: Assets/Scenes/EndScene.unity
     guid: c7babba3254a73441a3c6475a559ffc6

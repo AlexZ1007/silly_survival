@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelID: 2
   sceneName: Level2 - Summer
-  requiredItem: {fileID: 11400000, guid: 855abe76c1853d24bb894fab51f493e5, type: 2}
+  requiredItem: {fileID: 11400000, guid: f10b8f19f0e264946a9aca500318edf1, type: 2}
   nextLevel: {fileID: 11400000, guid: 34b9df0a0d7a54441b2e8dfd46a8063a, type: 2}
