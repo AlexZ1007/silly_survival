@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Grass
   m_EditorClassIdentifier: 
   actionName: Chovel and Chop Grass
-  holdTime: 3
+  toolRequirements:
+  - tool: 1
+    damage: 100
+  - tool: 4
+    damage: 100
+  maxHealth: 100
   respawnTime: 150
-  allowedTools: 03000000
   drops:
   - {fileID: 5244451269481508202, guid: a62f4c4e1ed3f3f44a28a30e56b352c7, type: 3}

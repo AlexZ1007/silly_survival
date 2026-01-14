@@ -15,11 +15,12 @@ MonoBehaviour:
   actionName: Shovel Snow
   toolRequirements:
   - tool: 7
-    holdTime: 5
+    damage: 30
   - tool: 8
-    holdTime: 3
+    damage: 50
   - tool: 9
-    holdTime: 1
+    damage: 100
+  maxHealth: 100
   respawnTime: 150
   drops:
   - {fileID: 4276997458118356432, guid: 93762a479838cb2409916ee0f62227e1, type: 3}
