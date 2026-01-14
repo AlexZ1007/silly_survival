@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03be7ab2e0657ab429e5d6a71601d2d7, type: 3}
-  m_Name: Level2
+  m_Name: Level3
   m_EditorClassIdentifier: 
   levelID: 2
   sceneName: Level2 - Summer
-  requiredItem: {fileID: 11400000, guid: 855abe76c1853d24bb894fab51f493e5, type: 2}
-  nextLevel: {fileID: 11400000, guid: 34b9df0a0d7a54441b2e8dfd46a8063a, type: 2}
+  requiredItem: {fileID: 11400000, guid: a604f342509908b408cb80a4a54cbf5f, type: 2}
+  nextLevel: {fileID: 11400000, guid: 32083e2516c6b7443a72ba1d33b3cf3b, type: 2}
