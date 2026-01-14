@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8764572384938259172}
   - component: {fileID: 928288634079346481}
   - component: {fileID: 5566899946018765571}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ProgressUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 3497856313747690473}
   - component: {fileID: 1088752512313125730}
   - component: {fileID: 4546925978650121083}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 4723874817228996835}
   - component: {fileID: 8053996326545019055}
   - component: {fileID: 7485289998667049315}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BarBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 9013866290777319742}
   - component: {fileID: -2599996931555884039}
   - component: {fileID: 6596019950813149771}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tree-5
   m_TagString: Tree
   m_Icon: {fileID: 0}
@@ -368,6 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceType: 3
   actionRequired: {fileID: 11400000, guid: 3ec0a9678851c51499d2a6077d63f18e, type: 2}
+  currentHealth: 0
 --- !u!114 &6596019950813149771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,7 +393,7 @@ GameObject:
   - component: {fileID: 3438927855566837939}
   - component: {fileID: 1323169694389229326}
   - component: {fileID: 1767867417684035858}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BarFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
