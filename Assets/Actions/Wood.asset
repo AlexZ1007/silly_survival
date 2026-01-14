@@ -15,12 +15,15 @@ MonoBehaviour:
   actionName: Chop Wood
   toolRequirements:
   - tool: 1
-    damage: 10
+    damage: 20
   - tool: 2
-    damage: 5
+    damage: 40
   - tool: 3
-    damage: 2
+    damage: 60
+  - tool: 4
+    damage: 10
   maxHealth: 100
   respawnTime: 150
   drops:
+  - {fileID: 2299900259112861600, guid: 3c9fb982bf9d8ed45823e3ec0ac35c0a, type: 3}
   - {fileID: 2299900259112861600, guid: 3c9fb982bf9d8ed45823e3ec0ac35c0a, type: 3}

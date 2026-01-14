@@ -151,6 +151,15 @@ public class PlayerAction : MonoBehaviour
         return nearest;
     }
 
+    private Vector3 GetBottomOfObject(Collider col, float offset = 0.6f)
+    {
+        Vector3 bottom = col.bounds.center;
+        bottom.y = col.bounds.min.y; // lowest point of the collider
+        bottom.y += offset;          // small lift so it doesn't clip
+        return bottom;
+    }
+
+
     //execute the action (spawn drops + respawn)
     private void PerformAction(Collider target)
     {
@@ -166,11 +175,10 @@ public class PlayerAction : MonoBehaviour
                 var dropPrefab = action.drops[i];
                 if (dropPrefab == null) continue;
 
-                // Position along a straight line in front of the resource
-                Vector3 spawnPos = target.transform.position + lineDirection * i * spacing;
+                Vector3 basePos = GetBottomOfObject(target, 0.6f);
+                Vector3 spawnPos = basePos + lineDirection * i * spacing;
 
-                // Keep drops slightly above ground
-                spawnPos.y = 5f;
+
 
                 // Avoid overlapping with other objects
                 spawnPos = FindFreeDropPosition(spawnPos, 0.5f, 0.3f);
@@ -285,6 +293,7 @@ public class PlayerAction : MonoBehaviour
 
         obj.SetActive(true);
     }
+
 
 
     // finds an empty position nearby so drops don’t overlap with objects

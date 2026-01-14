@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Wheat
   m_EditorClassIdentifier: 
   actionName: Shovel and Chop Wheat
-  holdTime: 3
+  toolRequirements:
+  - tool: 1
+    damage: 40
+  - tool: 2
+    damage: 90
+  maxHealth: 100
   respawnTime: 150
-  allowedTools: 03000000
   drops:
   - {fileID: 1136707962847421870, guid: 8112fbde390466d48ba12dc55f11afd9, type: 3}

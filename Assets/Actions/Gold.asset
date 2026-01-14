@@ -15,11 +15,12 @@ MonoBehaviour:
   actionName: Mine Gold
   toolRequirements:
   - tool: 4
-    holdTime: 8
+    damage: 10
   - tool: 2
-    holdTime: 5
+    damage: 20
   - tool: 3
-    holdTime: 3
+    damage: 30
+  maxHealth: 100
   respawnTime: 1800
   drops:
   - {fileID: 5492741827911542987, guid: 2306b89b12292d9499137d1b6854052e, type: 3}

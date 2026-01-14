@@ -17,9 +17,9 @@ MonoBehaviour:
   - tool: 1
     damage: 10
   - tool: 2
-    damage: 5
+    damage: 20
   - tool: 3
-    damage: 2
+    damage: 40
   maxHealth: 100
   respawnTime: 150
   drops:

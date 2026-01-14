@@ -15,11 +15,12 @@ MonoBehaviour:
   actionName: Mine Coal
   toolRequirements:
   - tool: 4
-    holdTime: 8
+    damage: 20
   - tool: 5
-    holdTime: 5
+    damage: 40
   - tool: 6
-    holdTime: 3
+    damage: 60
+  maxHealth: 100
   respawnTime: 150
   drops:
   - {fileID: 1653542740422960649, guid: a3b76c6384865074db0a3a29bdd0e47a, type: 3}

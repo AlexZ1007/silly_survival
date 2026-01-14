@@ -15,11 +15,12 @@ MonoBehaviour:
   actionName: 
   toolRequirements:
   - tool: 4
-    holdTime: 8
+    damage: 20
   - tool: 5
-    holdTime: 5
+    damage: 40
   - tool: 6
-    holdTime: 3
+    damage: 60
+  maxHealth: 100
   respawnTime: 1800
   drops:
   - {fileID: 3618844828861315703, guid: 39a75ee476885a24391c3df467bc2304, type: 3}
